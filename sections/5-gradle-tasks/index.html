@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Section 5: Gradle Tasks - Gradle Fundamentals Notes</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Section 5: Gradle Tasks";
+    var mkdocs_page_input_path = "sections\\5-gradle-tasks.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Gradle Fundamentals Notes</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../1-intro/">Section 1: Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../2-build-java-project-with-gradle/">Section 2: Build a Java Project with Gradle</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../3-dependencies/">Section 3: Dependencies</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../4-gradle-project-structure/">Section 4: Gradle Project Structure</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Section 5: Gradle Tasks</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../6-gradle-profile-and-cloud/">Section 6: Gradle Profile and Cloud</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Gradle Fundamentals Notes</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Section 5: Gradle Tasks</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="gradle-tasks">Gradle Tasks</h1>
+<p>Functions performed by gradle</p>
+<p>Consists of one of more actions</p>
+<p>Tell gradle what to do</p>
+<p>Can depend on other tasks</p>
+<p>e.g. <code>gradle build</code></p>
+<p>To view tasks run <code>gradle tasks</code></p>
+<h1 id="gradle-view-tool">Gradle View Tool</h1>
+<p>Provides an alternate way to running Gradle tasks</p>
+<p>Has its own GUI</p>
+<p>Is useful when you are first learning Gradle</p>
+<p>Is available in IntelliJ just the same as Maven</p>
+<h1 id="create-a-new-gradle-task">Create a New Gradle Task</h1>
+<p>Example task that prints the current date:</p>
+<pre><code class="language-groovy">task showDate {
+    dependsOn build
+    group = 'my tasks'
+    description = &quot;Show current date&quot;
+    doLast {
+        println 'Current Date: ' + new Date()
+    }
+}
+</code></pre>
+<p>Run <code>gradle showDate</code> in terminal to run the task.</p>
+<p>To make it depend on another task, add the dependsOn var. This means that build needs to run before showTask will run, meaning that gradle showDate will run the build and then showDate tasks.</p>
+<p><code>group</code> assigns the task to a group and <code>description</code> offers a description in the task view.</p>
+<p>If you don't assign a task to a group, it won't show up when running <code>gradle tasks</code>. To show the task you will either have to run <code>gradle tasks --all</code> or just add the task to a group.</p>
+<h1 id="extend-existing-tasks">Extend Existing Tasks</h1>
+<pre><code class="language-groovy">class ShowDate extends DefaultTask {
+
+    String dataMessage = &quot;Date is: &quot;
+
+    @TaskAction
+    void showDate() {
+        println dateMessage + new Date()
+    }
+}
+
+task showDate(type: ShowDate)
+</code></pre>
+<p>In the code above, we define a class that extends the DefaultTask class. We define what we want the task to do in a method annotated with @TaskAction and pull it all into the build.gradle file with a task.</p>
+<p>Other methods available in the Task interface that DefaultTask implements:</p>
+<ul>
+<li>configure(Closure configureClosure)</li>
+<li>deleteAllActions()</li>
+<li>doFirst(Closure action)</li>
+<li>doLast(Closure action)</li>
+</ul>
+<p>You can override an extending task. An example would be:</p>
+<pre><code class="language-groovy">task customShowDate(type: ShowDate) {
+    dateMessage = &quot;Custom time is: &quot;
+}
+</code></pre>
+<h1 id="creating-gradle-plugins">Creating Gradle Plugins</h1>
+<p>Reasons for creating a plugin:
+* To stop from repeating yourself
+* Allows resuse within project and enterprise</p>
+<pre><code class="language-groovy">buildscript {
+    dependencies {
+        classpath files('module-name/build/libs/module-project-name-1.0-SNAPSHOT.jar')
+    }
+}
+
+apply plugin: 'module-project-name-plugin'
+</code></pre>
+<p>To run the plugin use <code>gradle moduleName</code></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../6-gradle-profile-and-cloud/" class="btn btn-neutral float-right" title="Section 6: Gradle Profile and Cloud">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../4-gradle-project-structure/" class="btn btn-neutral" title="Section 4: Gradle Project Structure"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../4-gradle-project-structure/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../6-gradle-profile-and-cloud/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

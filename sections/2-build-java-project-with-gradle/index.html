@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Section 2: Build a Java Project with Gradle - Gradle Fundamentals Notes</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Section 2: Build a Java Project with Gradle";
+    var mkdocs_page_input_path = "sections\\2-build-java-project-with-gradle.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Gradle Fundamentals Notes</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../1-intro/">Section 1: Introduction</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Section 2: Build a Java Project with Gradle</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#learning-groovy-for-gradle">Learning Groovy for Gradle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-gradle-project-object-model">The Gradle Project Object Model</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../3-dependencies/">Section 3: Dependencies</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../4-gradle-project-structure/">Section 4: Gradle Project Structure</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../5-gradle-tasks/">Section 5: Gradle Tasks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../6-gradle-profile-and-cloud/">Section 6: Gradle Profile and Cloud</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Gradle Fundamentals Notes</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Section 2: Build a Java Project with Gradle</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="build-a-java-project-with-gradle">Build a Java Project with Gradle</h1>
+<p>Go to IntelliJ and create a new project with Gradle.</p>
+<p>The build.gradle file will look like this:</p>
+<pre><code class="language-groovy">plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+</code></pre>
+<p>Group and Version follow the same concepts as Maven. The artifact name is sotred in the gradle.settings file instead of with the group and version tags.</p>
+<p>Repositories is pointing to Maven Central, you can also point to other repos, including corp artifactory.</p>
+<p>Dependencies has junit on the testCompile group.</p>
+<p>I found a better example of a build.gradle file using the spring initializer.</p>
+<pre><code class="language-groovy">plugins {
+    id 'org.springframework.boot' version '2.4.1'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+</code></pre>
+<p>To build gradle use the following command:</p>
+<p><code>gradle build</code></p>
+<h2 id="learning-groovy-for-gradle">Learning Groovy for Gradle</h2>
+<p>Examining Java to Groovy: </p>
+<p><code>System.out.println(); becomes just println()</code></p>
+<p>There's no need for semicolon at the end of statements.</p>
+<p>If there's one arg in a method call, you don't need to have parentheses.</p>
+<p>It's still compiled down to byte code, the syntax is just more simple.</p>
+<pre><code class="language-groovy">class MyClass {
+    void doSomething(Closure closure) {
+        closure.call()
+    }
+}
+
+myObject = new MyClass()
+
+myObject.doSomething{
+    println new Date()
+}
+</code></pre>
+<p>With closures in Groovy (and Java 8+), you can define a method body at run time to be called and executed.</p>
+<h2 id="the-gradle-project-object-model">The Gradle Project Object Model</h2>
+<p>What is the POM?
+* Is a Java object built by Gradle
+* Represents the "things" in our application
+* Is used by Gradle to build projects
+* Is modifiable by developers</p>
+<p>Objects in the POM:
+* Project
+    * One-to-one relationship with build.gradle
+    * Assigned to a "project" reference variable
+* Task
+    * Project is a collection of tasks (compiler, create jar file, etc.)
+    * Task is a collection of actions
+    * Actions are functions performed by Gradle
+    * Actions list tasks for project</p>
+<p>The build.gradle file modifies the Project Object</p>
+<p><code>project.sourceCompatibility = 1.8</code></p>
+<p><code>project.dependencies {}</code></p>
+<p>You don't have to specify the project object, but you can.</p>
+<p>Run the following command to see the project properties available:</p>
+<p><code>gradle properties</code></p>
+<p>You can also view available properties at <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html">https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html</a></p>
+<p>To view available tasks run the following command:</p>
+<p><code>gradle tasks</code></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../3-dependencies/" class="btn btn-neutral float-right" title="Section 3: Dependencies">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../1-intro/" class="btn btn-neutral" title="Section 1: Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../1-intro/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../3-dependencies/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
