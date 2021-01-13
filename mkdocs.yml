@@ -1,0 +1,10 @@
+site_name: Gradle Fundamentals Notes
+nav:
+    - Home: index.md
+    - 'Section 1: Introduction': sections/1-intro.md
+    - 'Section 2: Build a Java Project with Gradle': sections/2-build-java-project-with-gradle.md
+    - 'Section 3: Dependencies': sections/3-dependencies.md
+    - 'Section 4: Gradle Project Structure': sections/4-gradle-project-structure.md
+    - 'Section 5: Gradle Tasks': sections/5-gradle-tasks.md
+    - 'Section 6: Gradle Profile and Cloud': sections/6-gradle-profile-and-cloud.md
+theme: readthedocs
